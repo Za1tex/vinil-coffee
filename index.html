@@ -1,0 +1,563 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Винил кофе</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Винил — кофейня с пластинками в Кореновске. Красная улица, 73. Ежедневно 08:00–24:00. +7 938 523-26-22">
+<meta property="og:title" content="Винил кофе — Кореновск">
+<meta property="og:description" content="Кофе, чай, лимонады и пластинки на проигрывателе. Красная, 73. Ежедневно 08:00–24:00.">
+<meta property="og:image" content="img/wall.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='31' fill='%23111'/%3E%3Ccircle cx='32' cy='32' r='22' fill='none' stroke='%23333' stroke-width='2'/%3E%3Ccircle cx='32' cy='32' r='11' fill='%23f1ead9'/%3E%3Ccircle cx='32' cy='32' r='2.5' fill='%23111'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poiret+One&family=Manrope:wght@400;500;700&family=Unbounded:wght@600;800&display=swap">
+<style>
+/* Layout: тёмный зал с серой штукатуркой — слева текст, справа живой проигрыватель; меню как их чёрная доска с LED-подсветкой */
+:root{
+  --ink:#0c0c0d;        /* чёрная мебель, стойка */
+  --coal:#161618;       /* панели, доска меню */
+  --stone:#2a2a2d;      /* серая штукатурка в тени */
+  --line:#3a3a3e;
+  --mute:#9b9a96;       /* второстепенный текст */
+  --chalk:#efede6;      /* белые буквы на доске */
+  --glow:#f3dca8;       /* тёплая LED-лента */
+  --label:#e6a090;      /* лосось наклейки «Мелодии» */
+  --wood:#4a2c1c;       /* орех проигрывателя */
+  --open:#8fd19e;
+  --f-board:"Poiret One","Comfortaa","Century Gothic",sans-serif;
+  --f-logo:"Unbounded","Arial Black",system-ui,sans-serif;
+  --f-body:"Manrope",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --gut:max(16px,env(safe-area-inset-left,0px));
+  --gutr:max(16px,env(safe-area-inset-right,0px));
+  --plaster:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='700'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.007' numOctaves='5' seed='11'/%3E%3CfeColorMatrix values='0 0 0 0 .95 0 0 0 0 .95 0 0 0 0 .93 2.2 0 0 0 -.95'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E");
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;background:var(--ink)}
+body{margin:0;background:var(--ink);color:var(--chalk);font:400 16px/1.6 var(--f-body);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--ink)}
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--glow);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1180px;margin:0 auto;padding-left:var(--gut);padding-right:var(--gutr)}
+h1,h2,h3{text-wrap:balance;margin:0}
+.eyebrow{font:500 12px/1 var(--f-body);letter-spacing:.22em;text-transform:uppercase;color:var(--mute);display:flex;gap:.8em;align-items:center}
+.eyebrow b{color:var(--glow);font-weight:700}
+.btn{display:inline-flex;align-items:center;gap:.6em;padding:.85em 1.4em;border-radius:999px;font:700 15px/1 var(--f-body);text-decoration:none;border:1px solid var(--chalk);transition:background .25s,color .25s,transform .25s}
+.btn:hover{transform:translateY(-2px)}
+.btn--fill{background:var(--chalk);color:var(--ink)}
+.btn--fill:hover{background:var(--glow);border-color:var(--glow)}
+.btn--ghost{color:var(--chalk)}
+.btn--ghost:hover{background:var(--chalk);color:var(--ink)}
+.btn svg{width:18px;height:18px}
+
+/* ---------- header ---------- */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:color-mix(in srgb,var(--ink) 82%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:10px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.brand svg{width:44px;height:44px;flex:none}
+.brand span{font:800 15px/1 var(--f-logo);letter-spacing:.08em}
+.nav{display:flex;align-items:center;gap:22px;font-weight:500;font-size:15px}
+.nav a{text-decoration:none;color:var(--mute);transition:color .2s}
+.nav a:hover{color:var(--chalk)}
+.nav .btn{padding:.6em 1.1em;font-size:14px;color:var(--chalk)}
+.led{height:2px;background:var(--line);position:relative}
+.led i{position:absolute;inset:0 auto 0 0;width:0;background:var(--glow);box-shadow:0 0 8px var(--glow),0 0 22px color-mix(in srgb,var(--glow) 60%,transparent)}
+@media (max-width:720px){.nav .hide-s{display:none}.brand span{display:none}.nav{gap:16px}}
+
+/* ---------- hero ---------- */
+.hero{position:relative;overflow:hidden;isolation:isolate}
+.hero::before{content:"";position:absolute;inset:0;background:var(--plaster);background-size:700px;opacity:.11;z-index:-1}
+.hero::after{content:"";position:absolute;inset:auto 0 0;height:40%;background:linear-gradient(transparent,var(--ink));z-index:-1}
+.hero .wrap{display:grid;grid-template-columns:1.05fr 1fr;align-items:center;gap:40px;padding-block:72px 64px}
+.hero-txt{min-width:0;display:grid;gap:26px}
+.hero h1{font:400 clamp(84px,15vw,190px)/.82 var(--f-board);letter-spacing:.02em;text-shadow:0 0 28px color-mix(in srgb,var(--glow) 25%,transparent)}
+.hero h1 small{display:block;font:800 clamp(16px,2.2vw,22px)/1 var(--f-logo);letter-spacing:.5em;margin-top:18px;color:var(--glow);text-shadow:none}
+.hero p.lead{font-size:clamp(17px,1.6vw,19px);max-width:30em;color:#d6d4cd;margin:0}
+.hero .cta{display:flex;flex-wrap:wrap;gap:12px}
+.facts{display:flex;flex-wrap:wrap;gap:10px 26px;font-size:14px;color:var(--mute)}
+.facts b{color:var(--chalk);font-weight:500}
+.status{display:inline-flex;align-items:center;gap:8px}
+.status i{width:8px;height:8px;border-radius:50%;background:var(--mute)}
+.status.on i{background:var(--open);box-shadow:0 0 10px var(--open)}
+
+/* turntable */
+.deck{position:relative;width:min(100%,520px);aspect-ratio:1/.86;justify-self:center;max-width:100%}
+.plinth{position:absolute;inset:0;border-radius:18px;background:
+  linear-gradient(115deg,rgba(255,255,255,.07),transparent 40%),
+  repeating-linear-gradient(92deg,rgba(0,0,0,.09) 0 1px,transparent 1px 9px),
+  linear-gradient(160deg,#5a3624,var(--wood) 55%,#2b190f);
+  box-shadow:0 40px 80px -30px #000,inset 0 1px 0 rgba(255,255,255,.12),inset 0 -6px 18px rgba(0,0,0,.4)}
+.platter{position:absolute;left:6%;top:8%;width:72%;aspect-ratio:1;border-radius:50%;background:#0a0a0a;box-shadow:0 10px 30px rgba(0,0,0,.6),0 0 0 4px #1d1d1f}
+.record{position:absolute;inset:2.5%;border-radius:50%;
+  background:radial-gradient(circle,transparent 0 31%,#0e0e0f 31.5% 33%,transparent 33.5%),
+  repeating-radial-gradient(circle,#121213 0 1.2px,#1c1c1e 1.2px 2.6px);
+  will-change:transform}
+.record .lbl{position:absolute;inset:32%;border-radius:50%;background:var(--chalk);display:grid;place-items:center;overflow:hidden}
+.record .lbl svg{width:100%;height:100%}
+.sheen{position:absolute;inset:2.5%;border-radius:50%;pointer-events:none;
+  background:conic-gradient(from 20deg,transparent 0 8%,rgba(255,255,255,.10) 13%,transparent 19% 50%,rgba(255,255,255,.07) 63%,transparent 69%);
+  -webkit-mask:radial-gradient(circle,transparent 33%,#000 34%);mask:radial-gradient(circle,transparent 33%,#000 34%)}
+.spindle{position:absolute;left:50%;top:50%;width:3%;aspect-ratio:1;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle at 35% 35%,#eee,#777);z-index:2}
+.arm{position:absolute;right:4%;top:6%;width:22%;aspect-ratio:1/3;transform-origin:50% 16%;transform:rotate(var(--arm,-24deg));transition:transform .9s cubic-bezier(.3,.7,.2,1);z-index:3;filter:drop-shadow(6px 10px 6px rgba(0,0,0,.5))}
+.arm svg{width:100%;height:100%;overflow:visible}
+.rpm{position:absolute;left:6%;bottom:5%;display:flex;gap:8px;font:600 11px/1 var(--f-body);letter-spacing:.12em;color:#d9c4b4}
+.rpm span{padding:6px 9px;border-radius:999px;border:1px solid rgba(255,255,255,.25)}
+.rpm span.on{background:var(--glow);color:var(--ink);border-color:var(--glow)}
+.knob{position:absolute;right:7%;bottom:7%;width:9%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 35%,#555,#111);box-shadow:0 3px 8px rgba(0,0,0,.6)}
+@media (max-width:860px){.hero .wrap{grid-template-columns:1fr;padding-block:40px 48px;gap:44px}.deck{width:min(100%,440px)}}
+
+/* ---------- ticker ---------- */
+.ticker{border-block:1px solid var(--line);overflow:hidden;padding-block:16px;background:var(--coal)}
+.ticker-row{display:flex;gap:0;white-space:nowrap;will-change:transform}
+.ticker-row span{font:400 clamp(22px,3vw,34px)/1 var(--f-board);letter-spacing:.06em;padding-right:1.1em;display:inline-flex;align-items:center;gap:1.1em}
+.ticker-row span::after{content:"";width:.55em;height:.55em;border-radius:50%;background:radial-gradient(circle,var(--label) 0 30%,#111 31%);display:inline-block}
+
+/* ---------- sections ---------- */
+section{position:relative}
+.sec{padding-block:clamp(72px,10vw,120px)}
+.sec-head{display:grid;gap:16px;margin-bottom:clamp(36px,5vw,56px);max-width:40em}
+.sec-head h2{font:400 clamp(44px,6.5vw,80px)/.95 var(--f-board);letter-spacing:.01em}
+.sec-head p{margin:0;color:#cfcdc6;font-size:17px}
+
+/* atmosphere */
+.atmo .wrap{display:grid;grid-template-columns:1fr 1.25fr;gap:clamp(32px,5vw,72px);align-items:center}
+.atmo .sec-head{margin:0}
+.atmo ul{list-style:none;padding:0;margin:8px 0 0;display:grid;gap:14px}
+.atmo li{display:grid;grid-template-columns:28px 1fr;gap:12px;align-items:start;color:#d6d4cd}
+.atmo li svg{width:24px;height:24px;color:var(--glow);margin-top:2px}
+.collage{position:relative;aspect-ratio:1/1.02;min-width:0}
+.collage figure{position:absolute;margin:0;overflow:hidden;border-radius:6px;box-shadow:0 30px 60px -25px #000}
+.collage img{width:100%;height:100%;object-fit:cover}
+.collage .c1{left:0;top:6%;width:62%;aspect-ratio:1.29}
+.collage .c2{right:0;top:0;width:44%;aspect-ratio:1.29}
+.collage .c3{right:4%;top:44%;width:52%;aspect-ratio:1.29}
+.collage .c4{left:6%;bottom:2%;width:46%;aspect-ratio:1.29}
+@media (max-width:860px){.atmo .wrap{grid-template-columns:1fr}}
+
+/* gallery rows */
+.gallery{overflow:hidden;padding-block:8px clamp(72px,10vw,120px)}
+.gallery .sec-head{padding-left:var(--gut);padding-right:var(--gutr);max-width:1180px;margin-inline:auto}
+.strip{display:flex;gap:14px;width:max-content;will-change:transform;margin-bottom:14px}
+.strip img{height:clamp(170px,24vw,280px);width:auto;aspect-ratio:1.29;object-fit:cover;border-radius:6px;filter:saturate(.9)}
+.strip img.w{aspect-ratio:2.6}
+
+/* menu board */
+.menu{background:var(--coal);isolation:isolate;overflow:hidden}
+.menu::before{content:"";position:absolute;inset:0;background:var(--plaster);background-size:900px;opacity:.06;z-index:-1}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+.chips a{font:500 14px/1 var(--f-body);padding:10px 14px;border-radius:999px;border:1px solid var(--line);text-decoration:none;color:#d6d4cd;transition:border-color .2s,color .2s}
+.chips a:hover{border-color:var(--glow);color:var(--glow)}
+.board{position:relative;background:#0b0b0c;border-radius:10px;padding:clamp(22px,4vw,48px);box-shadow:0 50px 90px -40px #000,inset 0 0 0 1px #232326}
+.board::before{content:"";position:absolute;left:3%;right:3%;top:-1px;height:2px;border-radius:2px;background:var(--glow);box-shadow:0 0 10px var(--glow),0 0 40px 4px color-mix(in srgb,var(--glow) 45%,transparent)}
+.board-title{font:400 clamp(30px,4vw,44px)/1 var(--f-board);text-align:center;letter-spacing:.12em;margin-bottom:clamp(24px,4vw,40px)}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,4vw,56px) clamp(28px,5vw,72px)}
+.grp{min-width:0;scroll-margin-top:90px}
+.grp + .grp{margin-top:0}
+.col{display:grid;gap:clamp(28px,4vw,44px);align-content:start;min-width:0}
+.row{display:grid;grid-template-columns:minmax(0,1fr) repeat(var(--c,3),3.4em);align-items:baseline;column-gap:6px}
+.row > *{min-width:0}
+.hdr{margin-bottom:10px}
+.hdr h3{font:400 clamp(24px,2.6vw,30px)/1.1 var(--f-board);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:6px;letter-spacing:.04em}
+.hdr .v{font:400 15px/1 var(--f-board);text-align:right;text-decoration:underline;text-underline-offset:5px;color:var(--chalk)}
+.hdr .v small{font-size:inherit}
+.items{list-style:none;padding:0;margin:0;display:grid}
+.items li{padding-block:7px;border-bottom:1px dashed #26262a;transition:background .2s}
+.items li:hover{background:#131315}
+.items .n{font:400 17px/1.3 var(--f-board);letter-spacing:.03em;text-transform:uppercase;font-weight:700}
+.items .p{text-align:right;font:500 15px/1 var(--f-body);font-variant-numeric:tabular-nums;color:var(--chalk)}
+.items .p.x{color:#4a4a4e}
+.note{color:var(--mute);font-size:13.5px;margin-top:28px;display:flex;flex-wrap:wrap;gap:6px 24px;justify-content:space-between}
+@media (max-width:860px){.cols{grid-template-columns:1fr}}
+@media (max-width:420px){.row{grid-template-columns:minmax(0,1fr) repeat(var(--c,3),2.9em)}.items .n{font-size:15.5px}.items .p{font-size:14px}}
+
+/* visit */
+.visit .wrap{display:grid;grid-template-columns:minmax(0,760px);gap:clamp(32px,5vw,64px);align-items:stretch}
+.visit-card{display:grid;gap:28px;align-content:start;min-width:0}
+.phone{font:400 clamp(34px,5.4vw,60px)/1 var(--f-board);letter-spacing:.02em;text-decoration:none;display:block;word-break:break-word}
+.phone:hover{color:var(--glow)}
+.kv{display:grid;gap:18px;margin:0}
+.kv div{display:grid;grid-template-columns:110px 1fr;gap:12px;border-top:1px solid var(--line);padding-top:16px}
+.kv dt{color:var(--mute);font-size:13px;letter-spacing:.14em;text-transform:uppercase;padding-top:3px}
+.kv dd{margin:0;font-size:17px}
+.visit .cta{display:flex;flex-wrap:wrap;gap:10px}
+.copy{background:none;cursor:pointer;color:var(--chalk);font:inherit}
+@media (max-width:860px){.visit .wrap{grid-template-columns:1fr}
+footer{border-top:1px solid var(--line);padding-block:32px}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px;color:var(--mute);font-size:14px}
+footer .brand svg{width:56px;height:56px}
+
+/* scroll reveal: видно по умолчанию, прячется только то, что ниже экрана при загрузке */
+.rv{transition:opacity .9s ease,transform .9s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
+.rv.pre{opacity:0;transform:translateY(34px)}
+.rv.pre.l{transform:translateX(-40px)}
+.rv.pre.r{transform:translateX(40px)}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .rv,.rv.pre{opacity:1;transform:none;transition:none}
+  .arm{transition:none}
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <path id="arcTop" d="M 30 100 A 70 70 0 0 1 170 100"/>
+    <path id="arcBot" d="M 12 100 A 88 88 0 0 0 188 100"/>
+  </defs>
+  <symbol id="logo" viewBox="0 0 200 200">
+    <circle cx="100" cy="100" r="98" fill="#0c0c0d"/>
+    <circle cx="100" cy="100" r="60" fill="#efede6"/>
+    <text font-family="Unbounded, Arial Black, sans-serif" font-weight="800" font-size="25" fill="#efede6" letter-spacing="3" text-anchor="middle"><textPath href="#arcTop" startOffset="50%">ВИНИЛ</textPath></text>
+    <text font-family="Unbounded, Arial Black, sans-serif" font-weight="800" font-size="25" fill="#efede6" letter-spacing="4" text-anchor="middle"><textPath href="#arcBot" startOffset="50%">КОФЕ</textPath></text>
+    <g fill="none" stroke="#0c0c0d" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M77 70 h46 l-3 -9 h-40 z"/>
+      <path d="M79 72 l6 64 h30 l6 -64"/>
+      <path d="M81 92 h38 M83 112 h34"/>
+    </g>
+    <g>
+      <circle cx="21" cy="100" r="13" fill="#0c0c0d" stroke="#efede6" stroke-width="2.5"/>
+      <rect x="16" y="94" width="3.5" height="12" fill="#efede6"/><rect x="22.5" y="94" width="3.5" height="12" fill="#efede6"/>
+      <circle cx="179" cy="100" r="13" fill="#0c0c0d" stroke="#efede6" stroke-width="2.5"/>
+      <path d="M175 93.5 L185 100 L175 106.5 Z" fill="#efede6"/>
+    </g>
+  </symbol>
+</svg>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Винил кофе — наверх">
+      <svg id="miniRecord" aria-hidden="true"><use href="#logo"/></svg>
+      <span>ВИНИЛ</span>
+    </a>
+    <nav class="nav" aria-label="Разделы">
+      <a class="hide-s" href="#atmosfera">Атмосфера</a>
+      <a href="#menu">Меню</a>
+      <a class="hide-s" href="#kontakty">Как найти</a>
+      <a class="btn btn--ghost" href="tel:+79385232622">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>
+        Позвонить
+      </a>
+    </nav>
+  </div>
+  <div class="led" aria-hidden="true"><i id="led"></i></div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-txt">
+        <div class="eyebrow rv"><b>Кофейня</b> Кореновск · Красная, 73</div>
+        <h1 class="rv" style="--d:.08s">Винил<small>КОФЕ</small></h1>
+        <p class="lead rv" style="--d:.16s">Кофе, чай и лимонады под пластинки. Проигрыватель, стена винила «Мелодии», постеры «Кино» и «Арии» — заходите на чашку или берите с собой.</p>
+        <div class="cta rv" style="--d:.24s">
+          <a class="btn btn--fill" href="#menu">Смотреть меню</a>
+          <a class="btn btn--ghost" href="#kontakty">Как добраться</a>
+        </div>
+        <div class="facts rv" style="--d:.32s">
+          <span class="status" id="status"><i></i><b id="statusText">Ежедневно</b></span>
+          <span>08:00–24:00</span>
+          <span><b>4,5</b> в 2ГИС</span>
+        </div>
+      </div>
+
+      <div class="deck" aria-hidden="true">
+        <div class="plinth"></div>
+        <div class="platter">
+          <div class="record" id="record"><div class="lbl"><svg><use href="#logo"/></svg></div></div>
+          <div class="sheen"></div>
+          <div class="spindle"></div>
+        </div>
+        <div class="arm" id="arm">
+          <svg viewBox="0 0 60 180">
+            <circle cx="30" cy="29" r="20" fill="#1a1a1c" stroke="#3b3b3f" stroke-width="2"/>
+            <circle cx="30" cy="29" r="9" fill="#9a9a9e"/>
+            <rect x="24" y="0" width="12" height="16" rx="3" fill="#2a2a2d"/>
+            <path d="M30 29 L30 128 L18 158" fill="none" stroke="#cfcfd2" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="6" y="150" width="20" height="26" rx="3" transform="rotate(28 16 163)" fill="#121214" stroke="#cfcfd2" stroke-width="1.5"/>
+            <rect x="9" y="166" width="7" height="6" transform="rotate(28 16 163)" fill="#d22d2d"/>
+          </svg>
+        </div>
+        <div class="rpm"><span class="on">33⅓</span><span>45</span></div>
+        <div class="knob"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-row" id="ticker">
+      <span>Эспрессо</span><span>Раф «Бельгийская вафля»</span><span>Лимонады</span><span>Колд-брю</span><span>Пластинки</span><span>08:00–24:00</span><span>Красная, 73</span>
+      <span>Эспрессо</span><span>Раф «Бельгийская вафля»</span><span>Лимонады</span><span>Колд-брю</span><span>Пластинки</span><span>08:00–24:00</span><span>Красная, 73</span>
+      <span>Эспрессо</span><span>Раф «Бельгийская вафля»</span><span>Лимонады</span><span>Колд-брю</span><span>Пластинки</span><span>08:00–24:00</span><span>Красная, 73</span>
+    </div>
+  </div>
+
+  <section class="sec atmo" id="atmosfera">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow rv"><b>A1</b> Атмосфера</div>
+        <h2 class="rv l">Здесь крутится винил</h2>
+        <p class="rv" style="--d:.1s">Серые стены под мрамор, чёрная мебель и тёплая подсветка. На полках — советские пластинки и кассеты, на стенах — рок от «Кино» до Metallica.</p>
+        <ul>
+          <li class="rv" style="--d:.15s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="6.5" stroke-dasharray="2 2"/></svg><span>Проигрыватель с колонками и стена пластинок</span></li>
+          <li class="rv" style="--d:.22s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 8h12v5a6 6 0 0 1-12 0z"/><path d="M17 9h1.5a2.5 2.5 0 0 1 0 5H17"/><path d="M8 2.5c0 1.5 1 1.5 1 3M12 2.5c0 1.5 1 1.5 1 3"/></svg><span>Классика, авторский кофе, чай и лимонады</span></li>
+          <li class="rv" style="--d:.29s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 11V8a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v3"/><path d="M2 11h20v6H2zM5 17v2M19 17v2"/></svg><span>Мягкий диван — можно посидеть, а не только взять с собой</span></li>
+        </ul>
+      </div>
+      <div class="collage">
+        <figure class="c1" data-par="-0.04"><img src="img/turntable.jpg" alt="Проигрыватель с пластинкой на стойке" loading="lazy"></figure>
+        <figure class="c2" data-par="0.06"><img src="img/kino-crop.jpg" alt="Постер «Цой жив. Кино» на серой стене" loading="lazy"></figure>
+        <figure class="c3" data-par="-0.07"><img src="img/melodiya.jpg" alt="Пластинки «Мелодия»" loading="lazy"></figure>
+        <figure class="c4" data-par="0.05"><img src="img/speakers.jpg" alt="Колонки и кассеты" loading="lazy"></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="gallery" aria-labelledby="gal-h">
+    <div class="sec-head">
+      <div class="eyebrow rv"><b>A2</b> Внутри</div>
+      <h2 id="gal-h" class="rv l">Пролистайте зал</h2>
+    </div>
+    <div class="strip" data-drift="1">
+      <img class="w" src="img/wall.jpg" alt="Стена пластинок с винилом" loading="lazy">
+      <img src="img/speaker-turntable.jpg" alt="Колонка и проигрыватель" loading="lazy">
+      <img src="img/posters.jpg" alt="Постеры рок-групп" loading="lazy">
+      <img src="img/cup-nautilus.jpg" alt="Кофе на фоне пластинок" loading="lazy">
+      <img src="img/albums.jpg" alt="Полка с пластинками" loading="lazy">
+      <img src="img/poster.jpg" alt="Постер на полке с растениями" loading="lazy">
+      <img src="img/sofa.jpg" alt="Мягкий диван" loading="lazy">
+    </div>
+    <div class="strip" data-drift="-1">
+      <img src="img/shelves.jpg" alt="Полки с кофе и стена с пластинкой" loading="lazy">
+      <img src="img/melodiya-single.jpg" alt="Пластинка «Мелодия»" loading="lazy">
+      <img src="img/linkin.jpg" alt="Полка с постерами и кассетами" loading="lazy">
+      <img class="w" src="img/records-row.jpg" alt="Ряд пластинок у стены" loading="lazy">
+      <img src="img/syrups.jpg" alt="Сиропы на полке" loading="lazy">
+      <img src="img/aria-cover.jpg" alt="Пластинка «Ария — Герой асфальта»" loading="lazy">
+      <img src="img/wall-door.jpg" alt="Стена с постерами у входа" loading="lazy">
+    </div>
+  </section>
+
+  <section class="sec menu" id="menu">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow rv"><b>B1</b> Меню</div>
+        <h2 class="rv l">Доска меню</h2>
+        <p class="rv" style="--d:.1s">Объём — в миллилитрах, цены — в рублях.</p>
+      </div>
+      <nav class="chips rv" aria-label="Разделы меню">
+        <a href="#m-coffee">Кофе</a><a href="#m-tea">Чай</a><a href="#m-lemon">Лимонады</a><a href="#m-season">Сезонное</a><a href="#m-bumble">Бамбл</a>
+      </nav>
+
+      <div class="board rv">
+        <div class="board-title">ВИНИЛ</div>
+        <div class="cols">
+          <div class="col">
+            <div class="grp" id="m-coffee">
+              <div class="row hdr" style="--c:4"><h3>Кофе</h3><span class="v">40</span><span class="v">250</span><span class="v">350</span><span class="v">450</span></div>
+              <ul class="items">
+                <li class="row" style="--c:4"><span class="n">Эспрессо</span><span class="p">100</span><span class="p x">—</span><span class="p x">—</span><span class="p x">—</span></li>
+                <li class="row" style="--c:4"><span class="n">Американо</span><span class="p x">—</span><span class="p">150</span><span class="p">170</span><span class="p x">—</span></li>
+                <li class="row" style="--c:4"><span class="n">Капучино</span><span class="p x">—</span><span class="p x">—</span><span class="p">220</span><span class="p">250</span></li>
+                <li class="row" style="--c:4"><span class="n">Латте</span><span class="p x">—</span><span class="p">200</span><span class="p">220</span><span class="p">250</span></li>
+                <li class="row" style="--c:4"><span class="n">Флэт уайт</span><span class="p x">—</span><span class="p">220</span><span class="p x">—</span><span class="p">270</span></li>
+                <li class="row" style="--c:4"><span class="n">Раф</span><span class="p x">—</span><span class="p x">—</span><span class="p">300</span><span class="p">350</span></li>
+                <li class="row" style="--c:4"><span class="n">Какао</span><span class="p x">—</span><span class="p">180</span><span class="p">210</span><span class="p">240</span></li>
+              </ul>
+            </div>
+            <div class="grp">
+              <div class="row hdr"><h3>Авторское</h3><span class="v">250</span><span class="v">350</span><span class="v">450</span></div>
+              <ul class="items">
+                <li class="row"><span class="n">Раф «Бельгийская вафля»</span><span class="p x">—</span><span class="p">300</span><span class="p">350</span></li>
+                <li class="row"><span class="n">Крем-капучино</span><span class="p x">—</span><span class="p">300</span><span class="p">350</span></li>
+                <li class="row"><span class="n">Флэт «Баунти»</span><span class="p x">—</span><span class="p">300</span><span class="p">350</span></li>
+              </ul>
+            </div>
+            <div class="grp" id="m-tea">
+              <div class="row hdr"><h3>Чай</h3><span class="v">250</span><span class="v">350</span><span class="v">450</span></div>
+              <ul class="items">
+                <li class="row"><span class="n">Английский завтрак</span><span class="p x">—</span><span class="p">150</span><span class="p">170</span></li>
+                <li class="row"><span class="n">Эрл грей</span><span class="p x">—</span><span class="p">150</span><span class="p">170</span></li>
+                <li class="row"><span class="n">Сенча</span><span class="p x">—</span><span class="p">150</span><span class="p">170</span></li>
+                <li class="row"><span class="n">Жасмин</span><span class="p x">—</span><span class="p">150</span><span class="p">170</span></li>
+                <li class="row"><span class="n">Наглый фрукт</span><span class="p x">—</span><span class="p">150</span><span class="p">170</span></li>
+              </ul>
+            </div>
+            <div class="grp">
+              <div class="row hdr"><h3>Авторский чай</h3><span class="v">250</span><span class="v">350</span><span class="v">450</span></div>
+              <ul class="items">
+                <li class="row"><span class="n">Имбирный</span><span class="p x">—</span><span class="p">180</span><span class="p">220</span></li>
+                <li class="row"><span class="n">Малина — манго</span><span class="p x">—</span><span class="p">180</span><span class="p">220</span></li>
+                <li class="row"><span class="n">Облепиха</span><span class="p x">—</span><span class="p">180</span><span class="p">220</span></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="grp" id="m-lemon">
+              <div class="row hdr" style="--c:1"><h3>Лимонады</h3><span class="v">₽</span></div>
+              <ul class="items">
+                <li class="row" style="--c:1"><span class="n">Классический</span><span class="p">230</span></li>
+                <li class="row" style="--c:1"><span class="n">Мохито</span><span class="p">230</span></li>
+                <li class="row" style="--c:1"><span class="n">Клубника — банан</span><span class="p">230</span></li>
+                <li class="row" style="--c:1"><span class="n">Манго — маракуйя</span><span class="p">230</span></li>
+                <li class="row" style="--c:1"><span class="n">Малина — мята</span><span class="p">230</span></li>
+                <li class="row" style="--c:1"><span class="n">Грейпфрут — розмарин</span><span class="p">230</span></li>
+                <li class="row" style="--c:1"><span class="n">Гранат — киви</span><span class="p">230</span></li>
+              </ul>
+            </div>
+            <div class="grp" id="m-season">
+              <div class="row hdr" style="--c:1"><h3>Сезонное меню</h3><span class="v">500</span></div>
+              <ul class="items">
+                <li class="row" style="--c:1"><span class="n">Айс-латте</span><span class="p">220</span></li>
+                <li class="row" style="--c:1"><span class="n">Эспрессо-тоник</span><span class="p">240</span></li>
+                <li class="row" style="--c:1"><span class="n">Фраппучино</span><span class="p">260</span></li>
+                <li class="row" style="--c:1"><span class="n">Гляссе</span><span class="p">260</span></li>
+                <li class="row" style="--c:1"><span class="n">Колд-брю</span><span class="p">240</span></li>
+              </ul>
+            </div>
+            <div class="grp" id="m-bumble">
+              <div class="row hdr" style="--c:1"><h3>Бамбл</h3><span class="v">500</span></div>
+              <ul class="items">
+                <li class="row" style="--c:1"><span class="n">Вишня</span><span class="p">250</span></li>
+                <li class="row" style="--c:1"><span class="n">Апельсин</span><span class="p">250</span></li>
+                <li class="row" style="--c:1"><span class="n">Ананас</span><span class="p">250</span></li>
+              </ul>
+            </div>
+            <div class="grp">
+              <div class="row hdr"><h3>Добавки</h3><span class="v">250</span><span class="v">350</span><span class="v">450</span></div>
+              <ul class="items">
+                <li class="row"><span class="n">Альтернативное молоко</span><span class="p">60</span><span class="p">70</span><span class="p">80</span></li>
+                <li class="row" style="--c:1"><span class="n">Сироп в ассортименте</span><span class="p">30</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="note"><span>Цены перенесены с доски меню в зале. Актуальные цены и наличие уточняйте у бариста.</span></div>
+    </div>
+  </section>
+
+  <section class="sec visit" id="kontakty">
+    <div class="wrap">
+      <div class="visit-card">
+        <div class="sec-head" style="margin:0">
+          <div class="eyebrow rv"><b>B2</b> Как найти</div>
+          <h2 class="rv l">Заходите на&nbsp;Красную</h2>
+        </div>
+        <a class="phone rv" href="tel:+79385232622" id="phone">+7 938 523-26-22</a>
+        <dl class="kv">
+          <div class="rv"><dt>Адрес</dt><dd>Красная улица, 73, 1 этаж<br>Кореновск, Краснодарский край, 353180</dd></div>
+          <div class="rv" style="--d:.08s"><dt>Часы</dt><dd>Ежедневно с 08:00 до 24:00</dd></div>
+        </dl>
+        <div class="cta rv">
+          <a class="btn btn--fill" href="https://2gis.ru/search/%D0%92%D0%B8%D0%BD%D0%B8%D0%BB%20%D0%9A%D0%BE%D1%80%D0%B5%D0%BD%D0%BE%D0%B2%D1%81%D0%BA%20%D0%9A%D1%80%D0%B0%D1%81%D0%BD%D0%B0%D1%8F%2073" target="_blank" rel="noopener">Маршрут в 2ГИС</a>
+          <a class="btn btn--ghost" href="https://yandex.ru/maps/?text=%D0%9A%D0%BE%D1%80%D0%B5%D0%BD%D0%BE%D0%B2%D1%81%D0%BA%2C%20%D0%9A%D1%80%D0%B0%D1%81%D0%BD%D0%B0%D1%8F%20%D1%83%D0%BB%D0%B8%D1%86%D0%B0%2C%2073" target="_blank" rel="noopener">Яндекс Карты</a>
+          <button class="btn btn--ghost copy" type="button" id="copyBtn">Скопировать номер</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Наверх"><svg aria-hidden="true"><use href="#logo"/></svg></a>
+    <span>Винил кофе · Кореновск, Красная, 73 · +7 938 523-26-22</span>
+    <span>Ежедневно 08:00–24:00</span>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const $ = s => document.querySelector(s);
+
+  /* открыто / закрыто по времени Кореновска (UTC+3) */
+  const st = $('#status'), stT = $('#statusText');
+  const tick = () => {
+    const now = new Date(), h = (now.getUTCHours() + 3) % 24;
+    const open = h >= 8;
+    st.classList.toggle('on', open);
+    stT.textContent = open ? 'Сейчас открыто' : 'Сейчас закрыто';
+  };
+  tick(); setInterval(tick, 60000);
+
+  /* копирование номера */
+  const cb = $('#copyBtn');
+  cb.addEventListener('click', () => {
+    const num = '+7 938 523-26-22';
+    const done = () => { cb.textContent = 'Номер скопирован'; setTimeout(() => cb.textContent = 'Скопировать номер', 2200); };
+    const fallback = () => { const r = document.createRange(); r.selectNodeContents($('#phone')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); cb.textContent = 'Номер выделен'; };
+    try { navigator.clipboard.writeText(num).then(done, fallback); } catch (e) { fallback(); }
+  });
+
+  /* появление при прокрутке — прячем только то, что ниже экрана */
+  const rvs = [...document.querySelectorAll('.rv')];
+  if (!reduce && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.remove('pre'); io.unobserve(e.target); }
+    }), { rootMargin: '0px 0px -8% 0px' });
+    rvs.forEach(el => {
+      if (el.getBoundingClientRect().top > innerHeight * 0.95) { el.classList.add('pre'); io.observe(el); }
+    });
+  }
+
+  const rec = $('#record'), mini = $('#miniRecord'), arm = $('#arm'), led = $('#led'), tk = $('#ticker');
+  const strips = [...document.querySelectorAll('[data-drift]')];
+  const pars = [...document.querySelectorAll('[data-par]')];
+
+  let lastY = scrollY, vel = 0, ang = 0, tkX = 0, last = performance.now(), armOn = false;
+  setTimeout(() => { armOn = true; }, 700);
+
+  const frame = now => {
+    const dt = Math.min(64, now - last) / 1000; last = now;
+    const y = scrollY, dy = y - lastY; lastY = y;
+    vel += (dy / Math.max(dt, 0.001) - vel) * 0.12;
+    const doc = document.documentElement.scrollHeight - innerHeight;
+    const prog = doc > 0 ? Math.min(1, Math.max(0, y / doc)) : 0;
+
+    led.style.width = (prog * 100).toFixed(2) + '%';
+    arm.style.setProperty('--arm', armOn ? (4 + prog * 20).toFixed(2) + 'deg' : '-24deg');
+
+    if (!reduce) {
+      /* 33⅓ об/мин = 200°/с, при прокрутке пластинка разгоняется */
+      const boost = 1 + Math.min(Math.abs(vel) / 600, 4);
+      ang = (ang + dt * 200 * boost) % 360;
+      rec.style.transform = `rotate(${ang}deg)`;
+      mini.style.transform = `rotate(${(y * 0.4) % 360}deg)`;
+
+      /* бегущая строка: едет сама и ускоряется по направлению прокрутки */
+      const half = tk.scrollWidth / 3;
+      tkX -= dt * 40 + dy * 0.6;
+      if (half > 0) { tkX = ((tkX % half) - half) % half; }
+      tk.style.transform = `translate3d(${tkX}px,0,0)`;
+
+      strips.forEach(s => {
+        const r = s.parentElement.getBoundingClientRect();
+        if (r.bottom < -100 || r.top > innerHeight + 100) return;
+        const p = Math.min(1, Math.max(0, (innerHeight - r.top) / (innerHeight + r.height)));
+        const span = Math.max(0, s.scrollWidth - innerWidth);
+        const dir = +s.dataset.drift;
+        const x = dir > 0 ? -span * p : -span * (1 - p);
+        s.style.transform = `translate3d(${x.toFixed(1)}px,0,0)`;
+      });
+
+      pars.forEach(el => {
+        const r = el.getBoundingClientRect();
+        const c = r.top + r.height / 2 - innerHeight / 2;
+        const off = Math.max(-28, Math.min(28, c * +el.dataset.par));
+        el.style.transform = `translate3d(0,${off.toFixed(1)}px,0)`;
+      });
+    }
+    requestAnimationFrame(frame);
+  };
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
